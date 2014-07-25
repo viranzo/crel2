@@ -86,7 +86,7 @@
         if((argumentsLength - childIndex) === 1 && typeof args[childIndex] === 'string' && element.textContent !== undefined){
             element.textContent = args[childIndex];
         }else{
-            for(; childIndex < argumentsLength; ++childIndex){
+            while(childIndex < argumentsLength){
                 child = args[childIndex];
 
                 if(child == null){
@@ -94,12 +94,14 @@
                 }
 
                 if (isArray(child)) {
-                  for (var i=0; i < child.length; ++i) {
-                    appendChild(element, child[i]);
-                  }
+					var i = 0;
+					while (i < child.length) {
+						appendChild(element, child[i++]);
+					}
                 } else {
                   appendChild(element, child);
                 }
+				childIndex++;
             }
         }
 
