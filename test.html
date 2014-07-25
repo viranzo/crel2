@@ -2,44 +2,57 @@
 <html>
 <head>
 <style>
-    div[
+    div{
         border:1px solid red;
-    ]
-    span[
+    }
+    span{
         border:1px solid green;
-    ]
-    a[
+    }
+    a{
         border:1px solid blue;
-    ]
-    .someClass[
+    }
+    .someClass{
         border:1px solid purple;
-    ]
+    }
 </style>
-<script src="crel.js"></script>
-<script src="https://rawgithub.com/KoryNunn/bench/master/bench.js"></script>
+<script src="crel2.js"></script>
 </head>
 <body>
 	<script>
 		document.body.appendChild(
-		crel('section', crel('h1', "A title"), crel('h2', "A sub title"), crel('br'), crel('button', [
-		  "class", "things"
-		], "THING1"), crel('button', [
-		  "class", "things"
-		], "THING2"), crel('button', [
-		  "class", "things"
-		], "THING3"), crel('button', [
-		  "class", "things"
-		], "THING4"), crel('button', [
-		  "class", "things"
-		], "THING5"), crel('button', [
-		  "class", "things"
-		], "THING6"), crel('span', [
-		  "class", "majigger"
-		], crel('a', [
-		  "href", "http://www.google.com"
-		], "A link")), "Blady bla bla, some text and that.", crel('table', [
-		  "id", "initialtests"
-		], crel('thead', crel('tr', crel('th', "Column header"), crel('th', "another one"), crel('th', "AND ANOTHER"), crel('th', "OMG SO MANY COLUMN HEADERS"))), crel('tbody', crel('tr', crel('td', "1"), crel('td', "2"), crel('td', "3"), crel('td', "4"))))));
+			crel2('section',
+				crel2('h1', "A title"),
+				crel2('h2', "A sub title"),
+				crel2('br'),
+				crel2('button', ["class", "things"], "THING1"),
+				crel2('button', ["class", "things"], "THING2"),
+				crel2('button', ["class", "things"], "THING3"),
+				crel2('button', ["class", "things"], "THING4"),
+				crel2('button', ["class", "things"], "THING5"),
+				crel2('button', ["class", "things"], "THING6"),
+				crel2('span', ["class", "majigger"],
+					crel2('a', ["href", "http://www.google.com"], "A link")
+				), "Blady bla bla, some text and that.",
+				crel2('table', ["id", "initialtests"],
+					crel2('thead',
+						crel2('tr',
+							crel2('th', "Column header"),
+							crel2('th', "another one"),
+							crel2('th', "AND ANOTHER"),
+							crel2('th', "OMG SO MANY COLUMN HEADERS")
+						)
+					),
+					crel2('tbody',
+						crel2('tr',
+							crel2('td', "1"),
+							crel2('td', "2"),
+							crel2('td', "3"),
+							crel2('td', "4")
+						)
+					)
+				)
+			)
+		);
 	</script>
 </body>
 </html>
