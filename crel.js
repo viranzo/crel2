@@ -8,125 +8,129 @@
 
 /*
 
-    This code is not formatted for readability, but rather run-speed and to assist compilers.
+	This code is not formatted for readability, but rather run-speed and to assist compilers.
 
-    However, the code's intention should be transparent.
+	However, the code's intention should be transparent.
 
-    *** IE SUPPORT ***
+	*** IE SUPPORT ***
 
-    If you require this library to work in IE7, add the following after declaring crel.
+	If you require this library to work in IE7, add the following after declaring crel.
 
-    var testDiv = document.createElement('div'),
-        testLabel = document.createElement('label');
+	var testDiv = document.createElement('div'),
+		testLabel = document.createElement('label');
 
-    testDiv.setAttribute('class', 'a');
-    testDiv['className'] !== 'a' ? crel.attrMap['class'] = 'className':undefined;
-    testDiv.setAttribute('name','a');
-    testDiv['name'] !== 'a' ? crel.attrMap['name'] = function(element, value){
-        element.id = value;
-    }:undefined;
+	testDiv.setAttribute('class', 'a');
+	testDiv['className'] !== 'a' ? crel.attrMap['class'] = 'className':undefined;
+	testDiv.setAttribute('name','a');
+	testDiv['name'] !== 'a' ? crel.attrMap['name'] = function(element, value){
+		element.id = value;
+	}:undefined;
 
 
-    testLabel.setAttribute('for', 'a');
-    testLabel['htmlFor'] !== 'a' ? crel.attrMap['for'] = 'htmlFor':undefined;
+	testLabel.setAttribute('for', 'a');
+	testLabel['htmlFor'] !== 'a' ? crel.attrMap['for'] = 'htmlFor':undefined;
 
 
 
 */
 
 (function (root, factory) {
-    if (typeof exports === 'object') {
-        module.exports = factory();
-    } else if (typeof define === 'function' && define.amd) {
-        define(factory);
-    } else {
-        root.crel = factory();
-    }
+	if (typeof exports === 'object') {
+		module.exports = factory();
+	} else if (typeof define === 'function' && define.amd) {
+		define(factory);
+	} else {
+		root.crel = factory();
+	}
 }(this, function () {
-    // based on http://stackoverflow.com/questions/384286/javascript-isdom-how-do-you-check-if-a-javascript-object-is-a-dom-object
-    var isNode = typeof Node === 'function'
-        ? function (object) { return object instanceof Node; }
-        : function (object) {
-            return object
-                && typeof object === 'object'
-                && typeof object.nodeType === 'number'
-                && typeof object.nodeName === 'string';
-        };
-    var isArray = function(a){ return a instanceof Array; };
-    var appendChild = function(element, child) {
-      if(!isNode(child)){
-          child = document.createTextNode(child);
-      }
-      element.appendChild(child);
-    };
+	// based on http://stackoverflow.com/questions/384286/javascript-isdom-how-do-you-check-if-a-javascript-object-is-a-dom-object
+	var isNode = typeof Node === 'function'
+		? function (object) { return object instanceof Node; }
+		: function (object) {
+			return object
+				&& typeof object === 'object'
+				&& typeof object.nodeType === 'number'
+				&& typeof object.nodeName === 'string';
+		};
+	var isArray = function(a){ return a instanceof Array; };
+	var appendChild = function(element, child) {
+		if(!isNode(child)){
+			child = document.createTextNode(child);
+		}
+		element.appendChild(child);
+	};
 
 
-    function crel(){
-        var document = window.document,
-            args = arguments, //Note: assigned to a variable to assist compilers. Saves about 40 bytes in closure compiler. Has negligable effect on performance.
-            element = args[0],
-            child,
-            settings = args[1],
-            childIndex = 2,
-            argumentsLength = args.length,
-            attributeMap = crel.attrMap;
+	function crel(){
+		var document = window.document,
+			args = arguments, //Note: assigned to a variable to assist compilers. Saves about 40 bytes in closure compiler. Has negligable effect on performance.
+			element = args[0],
+			child,
+			settings = args[1],
+			childIndex = 2,
+			argumentsLength = args.length,
+			attributeMap = crel.attrMap;
 
-        element = isNode(element) ? element : document.createElement(element);
-        // shortcut
-        if(argumentsLength === 1){
-            return element;
-        }
+		element = isNode(element) ? element : document.createElement(element);
+		// shortcut
+		if(argumentsLength === 1){
+			return element;
+		}
 
-        if(typeof settings !== 'object' || isNode(settings) || isArray(settings)) {
-            --childIndex;
-            settings = null;
-        }
+		if(typeof settings !== 'object' || isNode(settings) || isArray(settings)) {
+			--childIndex;
+			settings = false;
+		}
 
-        // shortcut if there is only one child that is a string
-        if((argumentsLength - childIndex) === 1 && typeof args[childIndex] === 'string' && element.textContent !== undefined){
-            element.textContent = args[childIndex];
-        }else{
-            while(childIndex < argumentsLength){
-                child = args[childIndex];
+		// shortcut if there is only one child that is a string
+		if((argumentsLength - childIndex) === 1 && typeof args[childIndex] === 'string' && element.textContent !== undefined){
+			element.textContent = args[childIndex];
+		}else{
+			while(childIndex < argumentsLength){
+				child = args[childIndex];
 
-                if(child == null){
-                    continue;
-                }
+				if(child == null){
+					continue;
+				}
 
-                if (isArray(child)) {
+				if (isArray(child)) {
 					var i = 0;
 					while (i < child.length) {
 						appendChild(element, child[i++]);
 					}
-                } else {
-                  appendChild(element, child);
-                }
+				} else {
+					appendChild(element, child);
+				}
 				childIndex++;
-            }
-        }
+			}
+		}
 
-        for(var key in settings){
-            if(!attributeMap[key]){
-                element.setAttribute(key, settings[key]);
-            }else{
-                var attr = crel.attrMap[key];
-                if(typeof attr === 'function'){
-                    attr(element, settings[key]);
-                }else{
-                    element.setAttribute(attr, settings[key]);
-                }
-            }
-        }
+		if(settings !== false){
+			var i = 0;
+			while(i < settings.length){
+				var key = settings[i++];
+				if(!attributeMap[key]){
+					element.setAttribute(key, settings[i++]);
+				}else{
+					var attr = crel.attrMap[key];
+					if(typeof attr === 'function'){
+						attr(element, settings[i++]);
+					}else{
+						element.setAttribute(attr, settings[i++]);
+					}
+				}
+			}
+		}
 
-        return element;
-    }
+		return element;
+	}
 
-    // Used for mapping one kind of attribute to the supported version of that in bad browsers.
-    // String referenced so that compilers maintain the property name.
-    crel['attrMap'] = {};
+	// Used for mapping one kind of attribute to the supported version of that in bad browsers.
+	// String referenced so that compilers maintain the property name.
+	crel['attrMap'] = {};
 
-    // String referenced so that compilers maintain the property name.
-    crel["isNode"] = isNode;
+	// String referenced so that compilers maintain the property name.
+	crel["isNode"] = isNode;
 
-    return crel;
+	return crel;
 }));
