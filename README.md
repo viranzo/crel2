@@ -118,7 +118,7 @@ crel is fast. Depending on what browser you use, it is up there with straight do
 
 crel: http://jsperf.com/dom-creation-libs/10
 
-crel2: http://jsperf.com/dom-creation-libs/23
+crel2: http://jsperf.com/dom-creation-libs/24
 
 # License #
 
