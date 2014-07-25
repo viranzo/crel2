@@ -52,7 +52,6 @@
 				&& typeof object.nodeType === 'number'
 				&& typeof object.nodeName === 'string';
 		};
-	var isArray = function(a){ return a instanceof Array; };
 	var appendChild = function(element, child) {
 		if(!isNode(child)){
 			child = document.createTextNode(child);
@@ -93,7 +92,7 @@
 					continue;
 				}
 
-				if (isArray(child)) {
+				if (child instanceof Array) {
 					var i = 0;
 					while (i < child.length) {
 						appendChild(element, child[i++]);
