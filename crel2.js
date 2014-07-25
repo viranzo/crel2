@@ -35,11 +35,11 @@
 		}
 		element.appendChild(child);
 	};
+	var document = window.document;
 
 
 	function crel2(){
-		var document = window.document,
-			args = arguments, //Note: assigned to a variable to assist compilers. Saves about 40 bytes in closure compiler. Has negligable effect on performance.
+		var args = arguments, //Note: assigned to a variable to assist compilers. Saves about 40 bytes in closure compiler. Has negligable effect on performance.
 			element = args[0],
 			child,
 			settings = args[1],
@@ -53,10 +53,7 @@
 			return element;
 		}
 
-		if(typeof settings !== 'object' || typeof settings === 'string'){
-			--childIndex;
-		}
-		else{
+		if(settings instanceof Array){
 			i = 0;
 			var key;
 			while(i < settings.length){
@@ -64,14 +61,17 @@
 				element.setAttribute(key, settings[i++]);
 			}
 		}
+		else{
+			--childIndex;
+		}
 		
 		// shortcut if there is only one child that is a string
-		if((argumentsLength - childIndex) === 1 && typeof args[childIndex] === 'string' && element.textContent !== undefined){
-			element.textContent = args[childIndex];
+		if((argumentsLength - childIndex) === 1 && typeof settings === 'string' && element.textContent !== undefined){
+			element.textContent = settings;
 		}
 		else{
 			while(childIndex < argumentsLength){
-				child = args[childIndex];
+				child = args[childIndex++];
 
 				if(child == null){
 					continue;
@@ -86,7 +86,6 @@
 				else{
 					appendChild(element, child);
 				}
-				childIndex++;
 			}
 		}
 

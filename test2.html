@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div{
+        border:1px solid red;
+    }
+    span{
+        border:1px solid green;
+    }
+    a{
+        border:1px solid blue;
+    }
+    .someClass{
+        border:1px solid purple;
+    }
+</style>
+<script src="crel.js"></script>
+</head>
+<body>
+	<script>
+		document.body.appendChild(
+			crel('section',
+				crel('h1', "A title"),
+				crel('h2', "A sub title"),
+				crel('br'),
+				crel('button', {"class": "things"}, "THING1"),
+				crel('button', {"class": "things"}, "THING2"),
+				crel('button', {"class": "things"}, "THING3"),
+				crel('button', {"class": "things"}, "THING4"),
+				crel('button', {"class": "things"}, "THING5"),
+				crel('button', {"class": "things"}, "THING6"),
+				crel('span', {"class": "majigger"},
+					crel('a', {"href": "http://www.google.com"}, "A link")
+				), "Blady bla bla, some text and that.",
+				crel('table', {"id": "initialtests"},
+					crel('thead',
+						crel('tr',
+							crel('th', "Column header"),
+							crel('th', "another one"),
+							crel('th', "AND ANOTHER"),
+							crel('th', "OMG SO MANY COLUMN HEADERS")
+						)
+					),
+					crel('tbody',
+						crel('tr',
+							crel('td', "1"),
+							crel('td', "2"),
+							crel('td', "3"),
+							crel('td', "4")
+						)
+					)
+				)
+			)
+		);
+	</script>
+</body>
+</html>
