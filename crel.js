@@ -77,7 +77,7 @@
 			return element;
 		}
 
-		if(typeof settings !== 'object' || isNode(settings) || isArray(settings)) {
+		if(typeof settings !== 'object' || isNode(settings)) {
 			--childIndex;
 			settings = false;
 		}
