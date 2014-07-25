@@ -12,38 +12,24 @@
 
 	However, the code's intention should be transparent.
 
-	*** IE SUPPORT ***
-
-	If you require this library to work in IE7, add the following after declaring crel.
-
-	var testDiv = document.createElement('div'),
-		testLabel = document.createElement('label');
-
-	testDiv.setAttribute('class', 'a');
-	testDiv['className'] !== 'a' ? crel.attrMap['class'] = 'className':undefined;
-	testDiv.setAttribute('name','a');
-	testDiv['name'] !== 'a' ? crel.attrMap['name'] = function(element, value){
-		element.id = value;
-	}:undefined;
-
-
-	testLabel.setAttribute('for', 'a');
-	testLabel['htmlFor'] !== 'a' ? crel.attrMap['for'] = 'htmlFor':undefined;
-
-
 
 */
 
-(function (root, factory) {
-	if (typeof exports === 'object') {
+// crel2
+// https://github.com/forestrf/crel2
+
+(function (root, factory){
+	if(typeof exports === 'object'){
 		module.exports = factory();
-	} else if (typeof define === 'function' && define.amd) {
+	}
+	else if(typeof define === 'function' && define.amd){
 		define(factory);
-	} else {
+	}
+	else{
 		root.crel2 = factory();
 	}
-}(this, function () {
-	var appendChild = function(element, child) {
+}(this, function (){
+	var appendChild = function(element, child){
 		if(typeof child === 'string'){
 			child = document.createTextNode(child);
 		}
@@ -58,7 +44,8 @@
 			child,
 			settings = args[1],
 			childIndex = 2,
-			argumentsLength = args.length;
+			argumentsLength = args.length,
+			i = 0;
 
 		element = typeof element === 'string' ? document.createElement(element) : element;
 		// shortcut
@@ -66,15 +53,23 @@
 			return element;
 		}
 
-		if(typeof settings !== 'object' || typeof settings === 'string') {
+		if(typeof settings !== 'object' || typeof settings === 'string'){
 			--childIndex;
-			settings = false;
 		}
-
+		else{
+			i = 0;
+			var key;
+			while(i < settings.length){
+				key = settings[i++];
+				element.setAttribute(key, settings[i++]);
+			}
+		}
+		
 		// shortcut if there is only one child that is a string
 		if((argumentsLength - childIndex) === 1 && typeof args[childIndex] === 'string' && element.textContent !== undefined){
 			element.textContent = args[childIndex];
-		}else{
+		}
+		else{
 			while(childIndex < argumentsLength){
 				child = args[childIndex];
 
@@ -82,25 +77,19 @@
 					continue;
 				}
 
-				if (child instanceof Array) {
-					var i = 0;
-					while (i < child.length) {
+				if(child instanceof Array){
+					i = 0;
+					while(i < child.length){
 						appendChild(element, child[i++]);
 					}
-				} else {
+				}
+				else{
 					appendChild(element, child);
 				}
 				childIndex++;
 			}
 		}
 
-		if(settings !== false){
-			var i = 0, key;
-			while(i < settings.length){
-				key = settings[i++];
-				element.setAttribute(key, settings[i++]);
-			}
-		}
 
 		return element;
 	}
