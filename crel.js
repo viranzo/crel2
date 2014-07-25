@@ -67,8 +67,7 @@
 			child,
 			settings = args[1],
 			childIndex = 2,
-			argumentsLength = args.length,
-			attributeMap = crel.attrMap;
+			argumentsLength = args.length;
 
 		element = isNode(element) ? element : document.createElement(element);
 		// shortcut
@@ -105,28 +104,15 @@
 		}
 
 		if(settings !== false){
-			var i = 0;
+			var i = 0, key;
 			while(i < settings.length){
-				var key = settings[i++];
-				if(!attributeMap[key]){
-					element.setAttribute(key, settings[i++]);
-				}else{
-					var attr = crel.attrMap[key];
-					if(typeof attr === 'function'){
-						attr(element, settings[i++]);
-					}else{
-						element.setAttribute(attr, settings[i++]);
-					}
-				}
+				key = settings[i++];
+				element.setAttribute(key, settings[i++]);
 			}
 		}
 
 		return element;
 	}
-
-	// Used for mapping one kind of attribute to the supported version of that in bad browsers.
-	// String referenced so that compilers maintain the property name.
-	crel['attrMap'] = {};
 
 	// String referenced so that compilers maintain the property name.
 	crel["isNode"] = isNode;
