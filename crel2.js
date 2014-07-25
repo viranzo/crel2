@@ -41,7 +41,6 @@
 	function crel2(){
 		var args = arguments, //Note: assigned to a variable to assist compilers. Saves about 40 bytes in closure compiler. Has negligable effect on performance.
 			element = args[0],
-			child,
 			settings = args[1],
 			childIndex = 2,
 			argumentsLength = args.length,
@@ -53,6 +52,7 @@
 			return element;
 		}
 
+		// settings is defined
 		if(settings instanceof Array){
 			i = 0;
 			var key;
@@ -66,26 +66,13 @@
 		}
 		
 		// shortcut if there is only one child that is a string
-		if((argumentsLength - childIndex) === 1 && typeof settings === 'string' && element.textContent !== undefined){
+		if(typeof settings === 'string' && element.textContent !== undefined){
 			element.textContent = settings;
 		}
 		else{
 			while(childIndex < argumentsLength){
-				child = args[childIndex++];
-
-				if(child == null){
-					continue;
-				}
-
-				if(child instanceof Array){
-					i = 0;
-					while(i < child.length){
-						appendChild(element, child[i++]);
-					}
-				}
-				else{
-					appendChild(element, child);
-				}
+				
+				appendChild(element, args[childIndex++]);
 			}
 		}
 
