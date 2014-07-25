@@ -5,9 +5,9 @@ crel2
 
 A fastest and simplest modification of crel https://github.com/KoryNunn/crel
 
-This readme contains text from the crel readme 
+This readme contains text from the crel readme.
 
-A small, simple, and fast DOM creation utility
+A small, simple, and fast DOM creation utility.
 
 # Why? #
 
@@ -21,7 +21,7 @@ Inspiration was taken from https://github.com/joestelmach/laconic, but crel wont
 
 # Changes #
 
-The difference with crel is more speed thanks to the use of arrays in front of objects and the loss of some utilities
+The difference with crel is more speed thanks to the use of arrays in front of objects and the loss of some utilities.
 
 It's name is crel2 because crel code is not compatible with crel2, it requires some changes to work.
 
@@ -117,6 +117,7 @@ But don't.
 crel is fast. Depending on what browser you use, it is up there with straight document.createElement calls.
 
 crel: http://jsperf.com/dom-creation-libs/10
+
 crel2: http://jsperf.com/dom-creation-libs/23
 
 # License #
