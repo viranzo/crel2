@@ -40,7 +40,7 @@
 	} else if (typeof define === 'function' && define.amd) {
 		define(factory);
 	} else {
-		root.crel = factory();
+		root.crel2 = factory();
 	}
 }(this, function () {
 	var appendChild = function(element, child) {
