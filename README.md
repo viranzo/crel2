@@ -29,11 +29,13 @@ It's name is crel2 because crel code is not compatible with crel2, it requires s
 
 Signature:
 
-    crel(tagName/dom element [, attributes, child1, child2, childN...])
-    crel(tagName/dom element [, child1, child2, childN...])
+	crel(tagName/dom element)
+    crel(tagName/dom element, child1, child2, childN...)
+    crel(tagName/dom element, attributes, child1, child2, childN...)
 	
-	atributes => [attribute, value, attribute, value...]
-	child => "string for textnode" | dom element/crel() | [child1, child2]
+	Attributes is an array with pairs of "attribute - value" or "event - function"
+	atributes => [attribute, value, attribute, value, event, function...]
+	child => "string for textnode" | dom element/crel()
 
 For browserify:
 
