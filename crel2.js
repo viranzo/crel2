@@ -55,10 +55,15 @@
 		// settings is defined
 		if(settings instanceof Array){
 			i = 0;
-			var key;
+			var key, action;
 			while(i < settings.length){
 				key = settings[i++];
-				element.setAttribute(key, settings[i++]);
+				if(typeof (action = settings[i++]) === 'function'){
+					element[key] = action;
+				}
+				else{
+					element.setAttribute(key, action);
+				}
 			}
 		}
 		else{
@@ -71,7 +76,6 @@
 		}
 		else{
 			while(childIndex < argumentsLength){
-				
 				appendChild(element, args[childIndex++]);
 			}
 		}

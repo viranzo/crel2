@@ -97,7 +97,18 @@ You can assign child elements to variables during creation:
 	<div>
 		<button></button>
 	</div>
-        
+	
+You can assign events as attributes during creation using:
+
+    crel2('div', ['onclick', function(){
+		alert('it works!')
+	}], 'click me!');
+	
+	Result:
+	
+	<div>click me!</div>
+	Launches the function when clicked
+
 You could probably use crel to rearrange existing dom..
 
     crel(someDiv,
