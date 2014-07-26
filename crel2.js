@@ -12,10 +12,9 @@
 
 	However, the code's intention should be transparent.
 
-
 */
 
-// crel2
+// "crel2" by Forestrf, modification of "crel" by Kory Nunn
 // https://github.com/forestrf/crel2
 
 (function (root, factory){
