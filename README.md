@@ -21,7 +21,7 @@ Inspiration was taken from https://github.com/joestelmach/laconic, but crel wont
 
 # Changes #
 
-The difference with crel is more speed thanks to the use of arrays in front of objects and the loss of some utilities.
+The difference with crel is more speed thanks to the use of arrays instead of objects and the loss of some utilities.
 
 It's name is crel2 because crel code is not compatible with crel2, it requires some changes to work.
 
