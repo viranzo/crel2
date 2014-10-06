@@ -33,8 +33,8 @@ Signature:
     crel(tagName/dom element, child1, child2, childN...)
     crel(tagName/dom element, attributes, child1, child2, childN...)
 	
-	Attributes is an array with pairs of "attribute - value" or "event - function"
-	atributes => [attribute, value, attribute, value, event, function...]
+	Attributes is an array with pairs of "attribute - value" or "event - object/function"
+	atributes => [attribute, value, attribute, value, event, object/function...]
 	child => "string for textnode" | dom element/crel()
 
 For browserify:
@@ -100,7 +100,7 @@ You can assign child elements to variables during creation:
 		<button></button>
 	</div>
 	
-You can assign events as attributes during creation using:
+You can assign events as attributes during creation:
 
     crel2('div', ['onclick', function(){
 		alert('it works!')
@@ -111,7 +111,14 @@ You can assign events as attributes during creation using:
 	<div>click me!</div>
 	Launches the function when clicked
 
-You could probably use crel to rearrange existing dom..
+You can also object properties as attributes during creation:
+
+	var test = crel2('div', ['arr', [1,2,3,4] ], 'this div has an array as attribute');
+	
+	console.log(test.arr.length);
+	// 3
+
+You could probably use crel to rearrange existing dom...
 
     crel(someDiv,
         crel(someOtherDiv, anotherOne)

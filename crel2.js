@@ -17,66 +17,59 @@
 // "crel2" by Forestrf, modification of "crel" by Kory Nunn
 // https://github.com/forestrf/crel2
 
-(function (root, factory){
-	if(typeof exports === 'object'){
+(function (root, factory) {
+	if (typeof exports === 'object') {
 		module.exports = factory();
-	}
-	else if(typeof define === 'function' && define.amd){
+	} else if (typeof define === 'function' && define.amd) {
 		define(factory);
-	}
-	else{
+	} else {
 		root.crel2 = factory();
 	}
-}(this, function (){
-	var appendChild = function(element, child){
-		if(typeof child !== 'object'){
-			child = document.createTextNode(child);
-		}
-		element.appendChild(child);
-	};
+})(this, function () {
 	var document = window.document;
 
-
-	function crel2(){
+	var f = function() {
 		var args = arguments, //Note: assigned to a variable to assist compilers. Saves about 40 bytes in closure compiler. Has negligable effect on performance.
 			element = args[0],
-			settings = args[1],
-			childIndex = 2,
-			argumentsLength = args.length,
-			i = 0;
+			argumentsLength = args.length;
 
 		element = typeof element === 'string' ? document.createElement(element) : element;
 		// shortcut
-		if(argumentsLength === 1){
+		if (argumentsLength === 1) {
 			return element;
 		}
 
-		// settings is defined
-		if(settings instanceof Array){
-			i = 0;
-			var key, action;
-			while(i < settings.length){
-				key = settings[i++];
-				if(typeof (action = settings[i++]) === 'function'){
+		// Reuse variable. settins inside the if, child inside the while
+		var settings_child = args[1],
+			childIndex = 2;
+
+		// settings_child is defined
+		if (settings_child instanceof Array) {
+			var i = 0, s = settings_child.length, key, action, type;
+			while (i < s) {
+				key = settings_child[i++];
+				type = typeof (action = settings_child[i++]);
+				if (type === 'string' || type === 'number') {
+					element.setAttribute(key, action);
+				} else {
 					element[key] = action;
 				}
-				else{
-					element.setAttribute(key, action);
-				}
 			}
-		}
-		else{
+		} else {
 			--childIndex;
 		}
-		
-		
-		while(childIndex < argumentsLength){
-			appendChild(element, args[childIndex++]);
-		}
 
+		// redefine settings_child
+		while (childIndex < argumentsLength) {
+			settings_child = args[childIndex++];
+			if (typeof settings_child !== 'object') {
+				settings_child = document.createTextNode(settings_child);
+			}
+			element.appendChild(settings_child);
+		}
 
 		return element;
 	}
 
-	return crel2;
-}));
+	return f;
+});
