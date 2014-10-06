@@ -47,8 +47,7 @@
 		if (settings_child instanceof Array) {
 			var s = settings_child.length, action, type;
 			while (s) {
-				type = typeof (action = settings_child[--s]);
-				if (type === 'string' || type === 'number') {
+				if (type = typeof (action = settings_child[--s]) === 'string' || type === 'number') {
 					element.setAttribute(settings_child[--s], action);
 				} else {
 					element[settings_child[--s]] = action;
