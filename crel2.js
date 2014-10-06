@@ -45,14 +45,13 @@
 
 		// settings_child is defined
 		if (settings_child instanceof Array) {
-			var i = 0, s = settings_child.length, key, action, type;
-			while (i < s) {
-				key = settings_child[i++];
-				type = typeof (action = settings_child[i++]);
+			var s = settings_child.length, action, type;
+			while (s) {
+				type = typeof (action = settings_child[--s]);
 				if (type === 'string' || type === 'number') {
-					element.setAttribute(key, action);
+					element.setAttribute(settings_child[--s], action);
 				} else {
-					element[key] = action;
+					element[settings_child[--s]] = action;
 				}
 			}
 		} else {
@@ -60,7 +59,7 @@
 		}
 
 		// redefine settings_child
-		while (childIndex < argumentsLength) {
+		while (argumentsLength > childIndex) {
 			settings_child = args[childIndex++];
 			if (typeof settings_child !== 'object') {
 				settings_child = document.createTextNode(settings_child);

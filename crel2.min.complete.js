@@ -1,4 +1,4 @@
-crel2 = (function(a){
+this.crel2 = (function(a){
 
 	var f = function() {
 		var args = arguments,
@@ -11,30 +11,28 @@ crel2 = (function(a){
 			return element;
 		}
 
-		var settings = args[1],
+		var settings_child = args[1],
 			childIndex = 2;
 
-		if (settings instanceof Array) {
-			var i = 0, s = settings.length, key, action, type;
-			while (i < s) {
-				key = settings[i++];
-				type = typeof (action = settings[i++]);
-				if (type === 'string' || type === 'number') {
-					element.setAttribute(key, action);
+		if (settings_child instanceof Array) {
+			var s = settings_child.length, action, type;
+			while (s) {
+				if (type = typeof (action = settings_child[--s]) === 'string' || type === 'number') {
+					element.setAttribute(settings_child[--s], action);
 				} else {
-					element[key] = action;
+					element[settings_child[--s]] = action;
 				}
 			}
 		} else {
 			--childIndex;
 		}
 
-		while (childIndex < argumentsLength) {
-			var child = args[childIndex++];
-			if (typeof child !== 'object') {
-				child = a.createTextNode(child);
+		while (argumentsLength > childIndex) {
+			settings_child = args[childIndex++];
+			if (typeof settings_child !== 'object') {
+				settings_child = a.createTextNode(settings_child);
 			}
-			element.appendChild(child);
+			element.appendChild(settings_child);
 		}
 
 		return element;
