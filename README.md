@@ -111,7 +111,7 @@ You can assign events as attributes during creation:
 	<div>click me!</div>
 	Launches the function when clicked
 
-You can also object properties as attributes during creation:
+You can also assign object properties as attributes during creation:
 
 	var test = crel2('div', ['arr', [1,2,3,4] ], 'this div has an array as attribute');
 	
