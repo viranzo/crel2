@@ -69,7 +69,7 @@ Example:
     
 You can create attributes with dashes, or reserved keywords, but using strings for the objects keys:
 
-    crel('div', ['class', 'thing', 'data-attrubute', 'majigger']);
+    crel('div', ['class', 'thing', 'data-attribute', 'majigger']);
 	
 	Result:
 	
