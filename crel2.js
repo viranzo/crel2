@@ -47,16 +47,13 @@
 		if (settings_child instanceof Array) {
 			var s = settings_child.length, action;
 			while (s) {
-				action = settings_child[--s];
-				switch(settings_child[--s]){
-					case "class":
-						element.className = action;
+				switch(typeof (action = settings_child[--s])){
+					case "string":
+					case "number":
+						element.setAttribute(settings_child[--s], action);
 					break;
 					default:
-						element[settings_child[s]] = action;
-					break;
-					case "for":
-						element.htmlFor = action;
+						element[settings_child[--s]] = action;
 					break;
 				}
 			}
