@@ -15,12 +15,19 @@ this.crel2 = (function(a){
 			childIndex = 2;
 
 		if (settings_child instanceof Array) {
-			var s = settings_child.length, action, type;
+			var s = settings_child.length, action;
 			while (s) {
-				if (type = typeof (action = settings_child[--s]) === 'string' || type === 'number') {
-					element.setAttribute(settings_child[--s], action);
-				} else {
-					element[settings_child[--s]] = action;
+				action = settings_child[--s];
+				switch(settings_child[--s]){
+					case "class":
+						element.className = action;
+					break;
+					default:
+						element[settings_child[s]] = action;
+					break;
+					case "for":
+						element.htmlFor = action;
+					break;
 				}
 			}
 		} else {
